@@ -11,8 +11,9 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #fdf6e4;
+            background: url('foto.jpg') no-repeat center center/cover;
             animation: fadeIn 2s ease-in-out;
+            overflow: hidden;
         }
 
         @keyframes fadeIn {
@@ -110,6 +111,35 @@
         .start-button:hover {
             background-color: #1d3557;
         }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -117,13 +147,34 @@
     <div class="heart" id="heart">
         <div class="text">ANNISSA</div>
     </div>
+    <div class="stars" id="stars"></div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="aftersex.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         function showLove() {
             const heart = document.getElementById('heart');
             const startButton = document.getElementById('startButton');
+            const music = document.getElementById('backgroundMusic');
+
             heart.style.display = 'block';
             startButton.style.display = 'none';
+            music.play();
+            createStars();
+        }
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
         }
     </script>
 </body>
